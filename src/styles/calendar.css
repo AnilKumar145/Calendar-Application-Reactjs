@@ -1,0 +1,57 @@
+
+  .calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  .day {
+    padding: 20px;
+    text-align: center;
+    background-color: #ecf0f1;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 1rem;
+    position: relative;
+    overflow: hidden; /* Ensure descriptions don’t overflow */
+  }
+  
+  .day:hover {
+    background-color: #bdc3c7;
+  }
+  
+  .day.has-event {
+    background-color: #3498db;
+    color: #fff;
+  }
+  
+  .day.has-event:hover {
+    background-color: #2980b9;
+  }
+  
+  .event-details {
+    margin-top: 10px;
+  }
+  
+  .event-description {
+    font-size: 0.9rem;
+    color: #fff;
+  }
+  
+  .delete-button {
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 1.2rem;
+    cursor: pointer;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+  }
+  
+  .delete-button:hover {
+    color: #e74c3c;
+  }
+  

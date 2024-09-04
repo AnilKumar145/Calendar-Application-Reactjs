@@ -1,25 +1,51 @@
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
+import React, { useState, useEffect } from 'react';
+import Calendar from './components/Calendar';
+import EventForm from './components/EventForm';
+import './styles/app.css';
+
+const App = () => {
+  const [events, setEvents] = useState({});
+  const [selectedDay, setSelectedDay] = useState(null);
+
+  useEffect(() => {
+    const storedEvents = localStorage.getItem('events');
+    if (storedEvents) {
+      setEvents(JSON.parse(storedEvents));
+    }
+  }, []);
+
+  const handleDayClick = (day) => {
+    setSelectedDay(day);
+  };
+
+  const handleAddEvent = (day, eventText) => {
+    const updatedEvents = { ...events, [day]: eventText };
+    setEvents(updatedEvents);
+    localStorage.setItem('events', JSON.stringify(updatedEvents));
+    setSelectedDay(null);
+  };
+
+  const handleDeleteEvent = (day) => {
+    const updatedEvents = { ...events };
+    delete updatedEvents[day];
+    setEvents(updatedEvents);
+    localStorage.setItem('events', JSON.stringify(updatedEvents));
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <h1>Simple Calendar</h1>
+      <Calendar
+        events={events}
+        onDayClick={handleDayClick}
+        onDeleteEvent={handleDeleteEvent}
+      />
+      {selectedDay && (
+        <EventForm selectedDay={selectedDay} onAddEvent={handleAddEvent} />
+      )}
     </div>
   );
-}
+};
 
 export default App;
